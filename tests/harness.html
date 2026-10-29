@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vocab Collector test page</title>
+  <style>
+    body { font: 17px/1.6 Georgia, serif; max-width: 680px; margin: 40px auto; padding: 0 16px; }
+    #test-input { width: 100%; }
+  </style>
+  <script src="chrome-mock.js"></script>
+  <script type="module">import "../extension/background.js";</script>
+  <script src="../extension/lib/sentence.js"></script>
+  <script src="../extension/content.js"></script>
+  <script type="module">
+    // ?demo opens the dialog on "ubiquitous" with an AI key set (used for README screenshots).
+    if (new URLSearchParams(location.search).has("demo")) {
+      await chrome.storage.local.set({ settings: { provider: "deepseek", apiKey: "sk-demo", model: "", baseUrl: "", deckName: "Vocab Collector" } });
+      const r = document.createRange();
+      r.selectNodeContents(document.querySelector("#p1 em"));
+      getSelection().removeAllRanges();
+      getSelection().addRange(r);
+      await chrome.runtime.sendMessage({ type: "openAddDialog" });
+    }
+  </script>
+</head>
+<body>
+  <h1>A test article</h1>
+  <p id="p1">Smartphones have become <em>ubiquitous</em> in modern life. Dr. Lee said the change was swift and profound. Nobody expected it.</p>
+  <p id="p2">The committee was meticulous about every detail, e.g. the fonts, the colors, and the paper. Still, the report felt futile.</p>
+  <ul><li id="li1">She gave up her plan because it was too costly</li></ul>
+  <textarea id="test-input">An input with an obscure word inside.</textarea>
+</body>
+</html>

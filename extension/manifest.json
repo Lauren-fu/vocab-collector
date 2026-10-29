@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Vocab Collector",
+  "version": "0.1.0",
+  "description": "Save new English words with their sentences while you read, and send them to Anki.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Vocab Collector: my words and settings",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": ["storage", "unlimitedStorage", "alarms", "contextMenus", "scripting", "activeTab"],
+  "host_permissions": [
+    "http://127.0.0.1:8765/*",
+    "https://api.deepseek.com/*"
+  ],
+  "optional_host_permissions": ["https://*/*", "http://*/*"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["lib/sentence.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "add-word": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Alt+Shift+S"
+      },
+      "description": "Add the selected word"
+    }
+  }
+}

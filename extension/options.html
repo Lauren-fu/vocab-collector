@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vocab Collector</title>
+  <link rel="icon" href="icons/icon32.png">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main>
+    <header class="top">
+      <img src="icons/icon48.png" alt="" width="32" height="32">
+      <div>
+        <h1>Vocab Collector</h1>
+        <p class="muted">Select a word on any page, click <b>+</b>, and it goes to Anki.</p>
+      </div>
+    </header>
+
+    <!-- Anki -->
+    <section class="card">
+      <div class="row between">
+        <h2>Anki</h2>
+        <div class="row">
+          <button id="anki-check" class="btn">Check again</button>
+          <button id="anki-sync" class="btn primary">Send to Anki now</button>
+        </div>
+      </div>
+      <p id="anki-status" class="status-line"><span class="dot"></span><span class="text">Checking…</span></p>
+      <p id="anki-pending" class="muted"></p>
+      <p id="anki-msg" class="muted"></p>
+    </section>
+
+    <!-- Words -->
+    <section class="card">
+      <div class="row between">
+        <h2>My words <span id="count" class="muted"></span></h2>
+        <input id="search" type="search" placeholder="Search" aria-label="Search words">
+      </div>
+      <div id="list" class="list"></div>
+      <p id="empty" class="muted empty" hidden>No words yet. Select a word on a web page and click the blue <b>+</b> button.</p>
+    </section>
+
+    <!-- Copy for my AI -->
+    <section class="card">
+      <h2>Copy for my AI</h2>
+      <p class="muted">Copy your words with a ready-made request. Paste it into any AI chat (DeepSeek, Kimi, Doubao…) to get a short story and a quiz.</p>
+      <div class="row">
+        <select id="copy-range" aria-label="Which words">
+          <option value="7">Last 7 days</option>
+          <option value="1">Today</option>
+          <option value="30">Last 30 days</option>
+          <option value="all">All words</option>
+        </select>
+        <button id="copy-ai" class="btn primary">Copy</button>
+        <span id="copy-msg" class="muted"></span>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section class="card">
+      <h2>Settings</h2>
+
+      <h3>AI meaning <span class="muted">(optional)</span></h3>
+      <p class="muted">With an API key, the meaning on the back of each card is written for you in simple English. Without a key, the back stays empty (you can write it yourself).</p>
+      <div class="grid">
+        <label for="provider">AI</label>
+        <select id="provider"></select>
+
+        <label for="api-key">API key</label>
+        <div class="row">
+          <input id="api-key" type="password" autocomplete="off" spellcheck="false" placeholder="Leave empty to not use AI">
+          <button id="show-key" class="btn small" type="button">Show</button>
+        </div>
+
+        <label for="model">Model</label>
+        <input id="model" spellcheck="false">
+
+        <label for="base-url">Address</label>
+        <input id="base-url" spellcheck="false" placeholder="https://…">
+      </div>
+
+      <h3>Anki deck</h3>
+      <div class="grid">
+        <label for="deck">Deck name</label>
+        <input id="deck" spellcheck="false">
+      </div>
+
+      <div class="row actions">
+        <button id="save" class="btn primary">Save</button>
+        <button id="test-ai" class="btn">Test AI</button>
+        <span id="settings-msg" class="muted"></span>
+      </div>
+
+      <h3>Shortcut</h3>
+      <p class="muted">Select a word, then press <kbd id="shortcut">Alt+Shift+S</kbd>. Or right-click it and choose “Add to Vocab Collector”.</p>
+      <button id="change-shortcut" class="btn">Change shortcut</button>
+    </section>
+
+    <!-- Backup -->
+    <section class="card">
+      <h2>Backup</h2>
+      <p class="muted">Your words are kept in this browser. Save a backup file from time to time.</p>
+      <div class="row">
+        <button id="export" class="btn">Save backup</button>
+        <button id="import" class="btn">Load backup</button>
+        <input id="import-file" type="file" accept=".json,application/json" hidden>
+        <span id="backup-msg" class="muted"></span>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

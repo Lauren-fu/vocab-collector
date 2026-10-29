@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Anki card preview</title>
+  <style>
+    body { margin: 0; padding: 24px; background: #e9ecef; font-family: -apple-system, sans-serif; }
+    .wrap { display: flex; gap: 24px; justify-content: center; }
+    .side { width: 440px; }
+    .side h2 { font-size: 13px; color: #656d76; text-transform: uppercase; letter-spacing: .06em; margin: 0 0 8px; text-align: center; }
+    .side .card { border-radius: 12px; min-height: 300px; box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="side"><h2>Front</h2><div class="card" id="front"></div></div>
+    <div class="side"><h2>Back</h2><div class="card" id="back"></div></div>
+  </div>
+  <script type="module">
+    // Renders the real Anki card template with sample fields (a simple {{Field}} / {{#Field}} renderer).
+    import { FRONT, BACK, CSS } from "../extension/lib/anki.js";
+    const fields = {
+      Word: "ubiquitous",
+      Sentence: "Smartphones have become <u>ubiquitous</u> in modern life.",
+      Definition: "Found everywhere; you see it in many places.",
+      Source: '<a href="#">Example article</a>',
+    };
+    const render = (tpl, extra = {}) => tpl
+      .replace(/\{\{#(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g, (_, f, inner) => (fields[f] ? inner : ""))
+      .replace(/\{\{(\w+)\}\}/g, (_, f) => extra[f] ?? fields[f] ?? "");
+    const style = document.createElement("style");
+    style.textContent = CSS;
+    document.head.append(style);
+    const front = render(FRONT);
+    document.getElementById("front").innerHTML = front;
+    document.getElementById("back").innerHTML = render(BACK, { FrontSide: front });
+  </script>
+</body>
+</html>

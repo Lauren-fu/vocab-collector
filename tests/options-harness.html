@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vocab Collector options test</title>
+  <link rel="stylesheet" href="../extension/options.css">
+  <script src="chrome-mock.js"></script>
+</head>
+<body>
+  <script type="module">
+    // Loads the real options page body, seeds some cards, then runs the real options.js.
+    await import("../extension/background.js");
+    const { newCard, putCard, saveSettings } = await import("../extension/lib/store.js");
+    window.__ankiOn = false;
+    const samples = [
+      ["ubiquitous", "Smartphones have become ubiquitous in modern life.", "Found everywhere."],
+      ["meticulous", "The committee was meticulous about every detail.", ""],
+      ["give up", "She gave up her plan because it was too costly.", "To stop trying."],
+    ];
+    for (const [word, sentence, definition] of samples) {
+      const i = sentence.toLowerCase().indexOf(word === "give up" ? "gave up" : word);
+      await putCard(newCard({ word, sentence, definition, wordStart: i, wordEnd: i + (word === "give up" ? 7 : word.length), sourceUrl: "https://example.com/article", sourceTitle: "Example article" }));
+    }
+    await saveSettings({ apiKey: "sk-test" });
+    const html = await (await fetch("../extension/options.html")).text();
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    doc.querySelectorAll("script").forEach((s) => s.remove());
+    doc.querySelectorAll("img").forEach((img) => { img.src = "../extension/" + img.getAttribute("src"); });
+    document.body.innerHTML = doc.body.innerHTML;
+    await import("../extension/options.js");
+    // ?demo acts as if Anki is open and sends the cards (used for README screenshots).
+    if (new URLSearchParams(location.search).has("demo")) {
+      window.__ankiOn = true;
+      document.getElementById("anki-sync").click();
+    }
+  </script>
+</body>
+</html>
