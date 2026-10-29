@@ -55,7 +55,7 @@ Vocab Collector 是一个给英语学习者用的浏览器插件。它把"收集
 
 需要准备：**Chrome 或 Edge 浏览器**、**[Anki](https://apps.ankiweb.net) 电脑版**、**AnkiConnect** 插件（代码 `2055492159`）。
 
-1. 下载本仓库（**Code → Download ZIP**）并解压。把 `extension` 文件夹放在一个固定的位置，之后不要移动它
+1. 在[最新版本页面](https://github.com/Lauren-fu/vocab-collector/releases/latest)下载 **`vocab-collector-v….zip`** 并解压。把 `extension` 文件夹放在一个固定的位置，之后不要移动它
 2. 打开 `chrome://extensions`（Edge 浏览器是 `edge://extensions`），开启**开发者模式**，点**加载已解压的扩展程序**，选择 `extension` 文件夹
 3. 在 Anki 里打开 **工具 → 插件 → 获取插件**，输入 `2055492159`，安装后重启 Anki
 4. 点击浏览器工具栏上的插件图标，看到 **Connected to Anki** 就说明设置好了

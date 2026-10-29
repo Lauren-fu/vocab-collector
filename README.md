@@ -55,7 +55,7 @@ Click the toolbar icon to see all your words, check the Anki connection, copy wo
 
 You need: **Chrome or Edge**, **[Anki](https://apps.ankiweb.net)** for desktop, and the **AnkiConnect** add-on (code `2055492159`).
 
-1. Download this repository (**Code → Download ZIP**) and unzip it. Keep the `extension` folder in a fixed place.
+1. Download **`vocab-collector-v….zip`** from the [latest release](https://github.com/Lauren-fu/vocab-collector/releases/latest) and unzip it. Keep the `extension` folder in a fixed place.
 2. Open `chrome://extensions` (or `edge://extensions`), turn on **Developer mode**, click **Load unpacked**, and choose the `extension` folder.
 3. In Anki, go to **Tools → Add-ons → Get Add-ons**, enter `2055492159`, then restart Anki.
 4. Click the extension's toolbar icon. When you see **Connected to Anki**, you are ready.
